@@ -1,8 +1,6 @@
 import React from 'react';
-import {View, Text, FlatList, Image, Dimensions, StyleSheet} from 'react-native';
-
-
-const dimensions = Dimensions.get('screen')
+import {View, Text, FlatList, StyleSheet} from 'react-native';
+import Card from "./Card";
 
 class List extends React.PureComponent {
   render() {
@@ -14,9 +12,7 @@ class List extends React.PureComponent {
           horizontal={true}
           data={content}
           renderItem={({item}) => (
-            <View style={styles.imgWrapper}>
-              <Image style={styles.img} source={{uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`}} />
-            </View>
+            <Card item={item} />
           )}>
         </FlatList>
       </View>
@@ -30,18 +26,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: '#000000'
   },
-  imgWrapper: {
-    marginRight: 16,
-    width: dimensions.width * 0.21,
-    height: dimensions.height * 0.15,
-    borderRadius: 5,
-    overflow: 'hidden',
-  },
-  img: {
-    width: '100%',
-    height: '100%',
-  }
-
 });
 
 export default List;
