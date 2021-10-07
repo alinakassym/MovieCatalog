@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {
+  ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import {getPopularMovies, getUpcomingMovies} from '../services/services'
+import {getPopularMovies, getUpcomingMovies} from '../services/services';
+import Swiper from "../components/Swiper";
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -29,20 +31,24 @@ const Home = () => {
       })
   }, []);
   return (
-    <View style={styles.block}>
-      <Text>Home</Text>
-      <Text style={styles.text}>Movie Name: {movies.original_title}</Text>
-      <Text style={styles.text}>Language: {movies.original_language}</Text>
-      <Text style={styles.text}>Release date: {movies.release_date}</Text>
-      {error && <Text style={styles.error}>Something went wrong</Text>}
-    </View>
+    <ScrollView style={styles.container}>
+      <View style={styles.block}>
+        <Swiper images={moviesImages}/>
+        <Text style={styles.text}>Movie Name: {movies.original_title}</Text>
+        <Text style={styles.text}>Language: {movies.original_language}</Text>
+        <Text style={styles.text}>Release date: {movies.release_date}</Text>
+        {error && <Text style={styles.error}>Something went wrong</Text>}
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  block: {
+  container: {
     flex: 1,
-    padding: 32,
+    width: '100%',
+  },
+  block: {
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -52,6 +58,10 @@ const styles = StyleSheet.create({
   },
   error: {
     color: 'red'
+  },
+  img: {
+    width: '50%',
+    height: 300,
   }
 });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Home from './screens/Home'
+import Home from './src/screens/Home'
 import {StyleSheet, View} from 'react-native';
 
 const App = () => {
@@ -12,7 +12,6 @@ const App = () => {
 const styles = StyleSheet.create({
   sectionContainer: {
     flex: 1,
-    padding: 32,
     alignItems: 'center',
     justifyContent: 'center'
   },
