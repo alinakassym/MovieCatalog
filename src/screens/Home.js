@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {getPopularMovies, getUpcomingMovies} from '../services/services';
+import {getPopularMovies, getPopularTv, getUpcomingMovies} from '../services/services';
 import Swiper from '../components/Swiper';
 import List from '../components/List';
 
 const Home = () => {
   const [popularMovies, setPopularMovies] = useState([]);
+  const [popularTvs, setPopularTvs] = useState([]);
   const [moviesImages, setMoviesImages] = useState([]);
   useEffect(() => {
     getUpcomingMovies()
@@ -22,6 +23,13 @@ const Home = () => {
       })
       .catch(err => {
         console.error(err);
+      });
+    getPopularTv()
+      .then(res => {
+        setPopularTvs(res);
+      })
+      .catch(err => {
+        console.error(err);
       })
   }, []);
   return (
@@ -29,6 +37,9 @@ const Home = () => {
       <Swiper images={moviesImages}/>
       <View style={styles.block}>
         <List title={'Popular Movies'} content={popularMovies} />
+      </View>
+      <View style={styles.block}>
+        <List title={'Popular TV'} content={popularTvs} />
       </View>
     </React.Fragment>
   );
@@ -38,8 +49,7 @@ const styles = StyleSheet.create({
   block: {
     marginVertical: 16,
     paddingHorizontal: 16,
-    alignItems: 'center',
-    justifyContent: 'center'
+    flexDirection: 'column',
   },
   text: {
     fontSize: 18,
