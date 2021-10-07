@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, Dimensions, StyleSheet, Text} from 'react-native';
+import {Image, Dimensions, StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 const dimensions = Dimensions.get('screen');
 const posterPlaceholder = require('../assets/images/poster-placeholder.png');
@@ -8,12 +8,12 @@ class Card extends React.PureComponent {
   render() {
     const {item} = this.props;
     return (
-      <View style={styles.imgWrapper}>
+      <TouchableOpacity style={styles.imgWrapper}>
         <Image style={styles.img} source={item.poster_path ?
           {uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`} : posterPlaceholder} />
 
         {!item && <Text style={styles.title}>{item.title}</Text>}
-      </View>
+      </TouchableOpacity>
     );
   }
 }
