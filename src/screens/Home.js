@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {getPopularMovies, getPopularTv, getUpcomingMovies} from '../services/services';
+import {getFamilyMovies, getPopularMovies, getPopularTv, getUpcomingMovies} from '../services/services';
 import Swiper from '../components/Swiper';
 import List from '../components/List';
 
 const Home = () => {
   const [popularMovies, setPopularMovies] = useState([]);
   const [popularTvs, setPopularTvs] = useState([]);
+  const [familyMovies, setFamilyMovies] = useState([]);
   const [moviesImages, setMoviesImages] = useState([]);
   useEffect(() => {
     getUpcomingMovies()
@@ -30,7 +31,14 @@ const Home = () => {
       })
       .catch(err => {
         console.error(err);
+      });
+    getFamilyMovies()
+      .then(res => {
+        setFamilyMovies(res);
       })
+      .catch(err => {
+        console.error(err);
+      });
   }, []);
   return (
     <React.Fragment>
@@ -39,7 +47,10 @@ const Home = () => {
         <List title={'Popular Movies'} content={popularMovies} />
       </View>
       <View style={styles.block}>
-        <List title={'Popular TV'} content={popularTvs} />
+        <List title={'Popular TV Shows'} content={popularTvs} />
+      </View>
+      <View style={styles.block}>
+        <List title={'Family Movies'} content={familyMovies} />
       </View>
     </React.Fragment>
   );
