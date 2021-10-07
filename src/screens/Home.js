@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
-  ScrollView,
+  FlatList,
   StyleSheet,
   Text,
   View,
@@ -9,7 +9,7 @@ import {getPopularMovies, getUpcomingMovies} from '../services/services';
 import Swiper from "../components/Swiper";
 
 const Home = () => {
-  const [movies, setMovies] = useState([]);
+  const [popularMovies, setPopularMovies] = useState([]);
   const [moviesImages, setMoviesImages] = useState([]);
   const [error, setError] = useState(false);
   useEffect(() => {
@@ -20,34 +20,31 @@ const Home = () => {
           imgArr.push(`https://image.tmdb.org/t/p/w500${item.poster_path}`)
         })
         setMoviesImages(imgArr);
-        console.log('moviesImages', moviesImages);
     });
     getPopularMovies()
       .then(res => {
-        setMovies(res[0]);
+        setPopularMovies(res);
       })
       .catch(err => {
         setError(err);
       })
   }, []);
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.block}>
-        <Swiper images={moviesImages}/>
-        <Text style={styles.text}>Movie Name: {movies.original_title}</Text>
-        <Text style={styles.text}>Language: {movies.original_language}</Text>
-        <Text style={styles.text}>Release date: {movies.release_date}</Text>
-        {error && <Text style={styles.error}>Something went wrong</Text>}
-      </View>
-    </ScrollView>
+    <View style={styles.block}>
+      <Swiper images={moviesImages}/>
+
+      <Text>Popular Movies</Text>
+      <FlatList horizontal={true} data={popularMovies} renderItem={({item}) => <Text>{item.title}</Text>}>
+      </FlatList>
+      <Text style={styles.text}>Movie Name: {popularMovies.original_title}</Text>
+      <Text style={styles.text}>Language: {popularMovies.original_language}</Text>
+      <Text style={styles.text}>Release date: {popularMovies.release_date}</Text>
+      {error && <Text style={styles.error}>Something went wrong</Text>}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: '100%',
-  },
   block: {
     alignItems: 'center',
     justifyContent: 'center'
@@ -58,10 +55,6 @@ const styles = StyleSheet.create({
   },
   error: {
     color: 'red'
-  },
-  img: {
-    width: '50%',
-    height: 300,
   }
 });
 

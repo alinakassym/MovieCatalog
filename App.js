@@ -1,19 +1,17 @@
 import React from 'react';
 import Home from './src/screens/Home'
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 
 const App = () => {
   return (
-    <View style={styles.sectionContainer}>
+    <ScrollView style={styles.sectionContainer}>
       <Home />
-    </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
   sectionContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    flex: 1
   },
 });
 
