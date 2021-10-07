@@ -1,8 +1,13 @@
 import React from 'react';
 import {Image, Dimensions, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import PropTypes from 'prop-types';
 
 const dimensions = Dimensions.get('screen');
 const posterPlaceholder = require('../assets/images/poster-placeholder.png');
+
+const propTypes = {
+  item: PropTypes.object,
+};
 
 class Card extends React.PureComponent {
   render() {
@@ -41,5 +46,7 @@ const styles = StyleSheet.create({
     color: '#000000',
   }
 });
+
+Card.propTypes = propTypes;
 
 export default Card;
