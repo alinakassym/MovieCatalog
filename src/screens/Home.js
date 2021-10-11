@@ -14,7 +14,7 @@ const getData = () => {
   ])
 };
 
-const Home = () => {
+const Home = ({navigation}) => {
   const [moviesImages, setMoviesImages] = useState();
   const [popularMovies, setPopularMovies] = useState();
   const [popularTvs, setPopularTvs] = useState();
@@ -50,21 +50,21 @@ const Home = () => {
         {/*Popular Movies*/}
         {popularMovies && (
           <View style={styles.block}>
-            <List title={'Popular Movies'} content={popularMovies}/>
+            <List navigation={navigation} title={'Popular Movies'} content={popularMovies}/>
           </View>
         )}
 
         {/*Popular TV Shows*/}
         {popularTvs && (
           <View style={styles.block}>
-            <List title={'Popular TV Shows'} content={popularTvs} />
+            <List navigation={navigation} title={'Popular TV Shows'} content={popularTvs} />
           </View>
         )}
 
         {/*Family Movies*/}
         {familyMovies && (
           <View style={styles.block}>
-            <List title={'Family Movies'} content={familyMovies} />
+            <List navigation={navigation} title={'Family Movies'} content={familyMovies} />
           </View>
         )}
       </ScrollView>)}

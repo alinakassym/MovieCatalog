@@ -7,13 +7,14 @@ const posterPlaceholder = require('../assets/images/poster-placeholder.png');
 
 const propTypes = {
   item: PropTypes.object,
+  navigation: PropTypes.object,
 };
 
 class Card extends React.PureComponent {
   render() {
-    const {item} = this.props;
+    const {item, navigation} = this.props;
     return (
-      <TouchableOpacity style={styles.imgWrapper}>
+      <TouchableOpacity onPress={() => navigation.navigate('Details')} style={styles.imgWrapper}>
         <Image style={styles.img} source={item.poster_path ?
           {uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`} : posterPlaceholder} />
 
