@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-navigation/native-stack": "^6.2.3",
     "axios": "^0.22.0",
     "pinar": "^0.12.1",
     "prop-types": "^15.7.2",
