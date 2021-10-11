@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, View, StyleSheet, ActivityIndicator} from 'react-native';
 import {getFamilyMovies, getPopularMovies, getPopularTv, getUpcomingMovies} from '../services/services';
 import Swiper from '../components/Swiper';
 import List from '../components/List';
+import Error from '../components/Error';
 
 const getData = () => {
   return Promise.all([
@@ -18,6 +19,8 @@ const Home = () => {
   const [popularMovies, setPopularMovies] = useState();
   const [popularTvs, setPopularTvs] = useState();
   const [familyMovies, setFamilyMovies] = useState();
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
   useEffect(() => {
     getData()
       .then(([moviesImagesData, popularMoviesData, popularTvsData, familyMoviesData]) => {
@@ -29,29 +32,44 @@ const Home = () => {
         setPopularMovies(popularMoviesData);
         setPopularTvs(popularTvsData);
         setFamilyMovies(familyMoviesData);
+        setLoaded(true);
     })
       .catch(err =>{
-        console.error(err)
+        setError(err);
+      })
+      .finally(() => {
+        setLoaded(true);
       });
   }, []);
   return (
     <React.Fragment>
-      {moviesImages && (<Swiper images={moviesImages}/>)}
-      {popularMovies && (
-        <View style={styles.block}>
-          <List title={'Popular Movies'} content={popularMovies}/>
-        </View>
-      )}
-      {popularTvs && (
-        <View style={styles.block}>
-          <List title={'Popular TV Shows'} content={popularTvs} />
-        </View>
-      )}
-      {familyMovies && (
-        <View style={styles.block}>
-          <List title={'Family Movies'} content={familyMovies} />
-        </View>
-      )}
+      {loaded && !error && (<ScrollView>
+        {/*Upcoming Movies*/}
+        {moviesImages && (<Swiper images={moviesImages}/>)}
+
+        {/*Popular Movies*/}
+        {popularMovies && (
+          <View style={styles.block}>
+            <List title={'Popular Movies'} content={popularMovies}/>
+          </View>
+        )}
+
+        {/*Popular TV Shows*/}
+        {popularTvs && (
+          <View style={styles.block}>
+            <List title={'Popular TV Shows'} content={popularTvs} />
+          </View>
+        )}
+
+        {/*Family Movies*/}
+        {familyMovies && (
+          <View style={styles.block}>
+            <List title={'Family Movies'} content={familyMovies} />
+          </View>
+        )}
+      </ScrollView>)}
+      {!loaded && (<ActivityIndicator size={'large'}/>)}
+      {error && (<Error />)}
     </React.Fragment>
   );
 };
